@@ -1,8 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
-function orderTotal(int $unitPrice, int $quantity): int
+function orderTotal(array $items): int
 {
-    return $unitPrice * $quantity;
+    $total = 0;
+    foreach ($items as $item) {
+        $price = (int) ($item['price'] ?? 0);
+        $qty = (int) ($item['quantity'] ?? 0);
+        if ($price <= 0 || $qty <= 0) {
+            continue;
+        }
+        $total += $price * $qty;
+    }
+    return $total;
 }
